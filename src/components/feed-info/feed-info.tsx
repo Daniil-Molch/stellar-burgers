@@ -25,7 +25,7 @@ export const FeedInfo: FC = () => {
       pendingOrders={pendingOrders}
       feed={{
         total: total,
-        totalToday:totalToday
+        totalToday: totalToday
       }}
     />
   );

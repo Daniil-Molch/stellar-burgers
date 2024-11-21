@@ -13,7 +13,7 @@ type TFeedsState = {
 };
 
 export const initialState: TFeedsState = {
-  status: "idle",
+  status: 'idle',
   error: null,
   data: {
     orders: [],
@@ -29,18 +29,17 @@ export const feedSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(feedInfo.pending, (state) => {
-      state.status = "pending";
+      state.status = 'pending';
       state.error = null;
     });
     builder.addCase(feedInfo.fulfilled, (state, action) => {
-      state.status = "succeeded";
+      state.status = 'succeeded';
       state.error = null;
       state.data = action.payload;
     });
     builder.addCase(feedInfo.rejected, (state, action) => {
-      state.status = "failed";
+      state.status = 'failed';
       state.error = action.error;
     });
   }
 });
-

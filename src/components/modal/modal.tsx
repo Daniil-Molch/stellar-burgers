@@ -8,26 +8,32 @@ import { useNavigate } from 'react-router-dom';
 const modalRoot = document.getElementById('modals');
 
 export const Modal: FC<TModalProps> = memo(({ title, onClose, children }) => {
-  const navigate = useNavigate();
-  function onDismiss() {
-    onClose && onClose();
-    navigate(-1);
-  }
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
-      e.key === 'Escape' && onDismiss();
+      e.key === 'Escape' && onClose();
     };
 
     document.addEventListener('keydown', handleEsc);
     return () => {
       document.removeEventListener('keydown', handleEsc);
     };
-  }, [onDismiss]);
+  }, [onClose]);
 
   return ReactDOM.createPortal(
-    <ModalUI title={title} onClose={onDismiss}>
+    <ModalUI title={title} onClose={onClose}>
       {children}
     </ModalUI>,
     modalRoot as HTMLDivElement
   );
 });
+
+export const NavigationModal: FC<TModalProps> = memo(
+  ({ title, onClose, children }) => {
+    const navigate = useNavigate();
+    function onDismiss() {
+      onClose && onClose();
+      navigate(-1);
+    }
+    return <Modal title={title} children={children} onClose={onDismiss} />;
+  }
+);

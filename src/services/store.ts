@@ -9,12 +9,11 @@ import { burgerSlice } from './burger-slice';
 import { authSlice } from './auth-slice';
 import { feedSlice } from './feedInfo';
 
-
 const rootReducer = combineReducers({
   [burgerSlice.name]: burgerSlice.reducer,
   [burgerConstructorSlice.name]: burgerConstructorSlice.reducer,
   [authSlice.name]: authSlice.reducer,
-  [feedSlice.name]:feedSlice.reducer
+  [feedSlice.name]: feedSlice.reducer
 }); // Заменить на импорт настоящего редьюсера
 
 const store = configureStore({

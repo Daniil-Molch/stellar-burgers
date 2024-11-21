@@ -5,9 +5,7 @@ import { TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
 import { useAppDispatch, useAppSelector } from '@services/store';
 
-
 export const BurgerIngredients: FC = () => {
- 
   const buns = useAppSelector((state) =>
     state.burger.ingridients.filter((ingridient) => ingridient.type == 'bun')
   );

@@ -11,7 +11,7 @@ import { useIngredients } from '@hooks/useIngredients';
 
 export const ConstructorPage: FC = () => {
   /** TODO: взять переменную из стора */
-  const {status} = useIngredients();
+  const { status } = useIngredients();
   return (
     <>
       {status == 'pending' ? (

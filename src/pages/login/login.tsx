@@ -2,7 +2,7 @@ import { FC, SyntheticEvent, useState } from 'react';
 import { LoginUI } from '@ui-pages';
 import { useAppDispatch } from '@services/store';
 import { loginUser } from '@services/auth-slice';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const Login: FC = () => {
   const [email, setEmail] = useState('');
@@ -10,11 +10,14 @@ export const Login: FC = () => {
   const [error, setError] = useState('');
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const handleSubmit = (e: SyntheticEvent) => {
     dispatch(loginUser({ email, password }))
       .unwrap()
       .then(() => {
-        navigate('/');
+        const to = location.state.from ?? '/';
+        console.log(to);
+        navigate(to);
       })
       .catch((e) => {
         console.log(e);

@@ -1,34 +1,27 @@
 import { Preloader } from '@ui';
-import { useAppDispatch, useAppSelector } from '../services/store';
-// import {
-//   isAuthCheckedSelector,
-//   userDataSelector
-// } from '../services/store/selectors';
 import { Navigate, useLocation } from 'react-router';
-import { ReactNode, useEffect } from 'react';
-import { authSlice, checkAuth } from '@services/auth-slice';
+import { ReactNode } from 'react';
 import { useAuth } from '@hooks/useAuth';
 type ProtectedRouteProps = {
   children: ReactNode;
+  disAuth?: boolean;
 };
-export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+export const ProtectedRoute = ({
+  children,
+  disAuth = false
+}: ProtectedRouteProps) => {
   const { isAuthChecked, user } = useAuth();
-
   const location = useLocation();
-  const pathName = location.pathname;
 
   if (!isAuthChecked) {
     // пока идёт чекаут пользователя, показываем прелоадер
     return <Preloader />;
   }
-
-  if (!user) {
-    console.log(pathName);
-    if (pathName == '/login') {
-      return children;
-    }
-    // если пользователя в хранилище нет, то делаем редирект
-    return <Navigate replace to='/login' />;
+  if (disAuth && user) {
+    return <Navigate to={'/'} />;
+  }
+  if (!disAuth && !user) {
+    return <Navigate to='/login' state={{ from: location }} />;
   }
 
   return children;

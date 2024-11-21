@@ -12,7 +12,7 @@ import {
 import '../../index.css';
 import styles from './app.module.css';
 
-import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
+import { AppHeader, IngredientDetails, OrderInfo } from '@components';
 import {
   BrowserRouter,
   Outlet,
@@ -22,6 +22,7 @@ import {
   useLocation
 } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route';
+import { NavigationModal } from '../modal/modal';
 
 const App = () => {
   const location = useLocation();
@@ -39,21 +40,52 @@ const App = () => {
         >
           <Route path='/' Component={ConstructorPage} />
           <Route path='/feed' Component={Feed} />
-          <Route path={'/login'} Component={Login}></Route>
-          <Route path={'/register'} Component={Register}></Route>
-          <Route path={'/forgot-password'} Component={ForgotPassword}></Route>
-          <Route path={'/reset-password'} Component={ResetPassword}></Route>
+          <Route
+            path={'/login'}
+            element={
+              <ProtectedRoute disAuth>
+                <Login />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={'/register'}
+            element={
+              <ProtectedRoute disAuth>
+                <Register />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={'/forgot-password'}
+            element={
+              <ProtectedRoute disAuth>
+                <ForgotPassword />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={'/reset-password'}
+            element={
+              <ProtectedRoute disAuth>
+                <ResetPassword />
+              </ProtectedRoute>
+            }
+          />
+          {/* <Route path={'/register'} Component={Register}></Route> */}
+          {/* <Route path={'/forgot-password'} Component={ForgotPassword}></Route> */}
+          {/* <Route path={'/reset-password'} Component={ResetPassword}></Route> */}
           <Route
             element={
               <ProtectedRoute>
-                <Outlet></Outlet>
+                <Outlet />
               </ProtectedRoute>
             }
           >
-            <Route path={'/profile'} Component={Profile}></Route>
-            <Route path={'/profile/orders'} Component={ProfileOrders}></Route>
+            <Route path={'/profile'} Component={Profile} />
+            <Route path={'/profile/orders'} Component={ProfileOrders} />
           </Route>
-          <Route path={'*'} Component={NotFound404}></Route>
+          <Route path={'*'} Component={NotFound404} />
         </Route>
       </Routes>
       {backgroundLocation && (
@@ -61,28 +93,28 @@ const App = () => {
           <Route
             path='/profile/orders/:number'
             element={
-              <Modal title='Детали заказа' onClose={() => {}}>
+              <NavigationModal title='Детали заказа' onClose={() => {}}>
                 <OrderInfo />
-              </Modal>
+              </NavigationModal>
             }
           />
 
           <Route
             path={'/feed/:number'}
             element={
-              <Modal title='order info' onClose={() => {}}>
+              <NavigationModal title='order info' onClose={() => {}}>
                 <OrderInfo />
-              </Modal>
+              </NavigationModal>
             }
-          ></Route>
+          />
           <Route
             path={'/ingredients/:id'}
             element={
-              <Modal title='IngredientDetails' onClose={() => {}}>
+              <NavigationModal title='IngredientDetails' onClose={() => {}}>
                 <IngredientDetails />
-              </Modal>
+              </NavigationModal>
             }
-          ></Route>
+          />
         </Routes>
       )}
     </div>

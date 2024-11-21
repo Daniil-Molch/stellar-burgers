@@ -1,4 +1,9 @@
-import { getIngredientsApi, getOrderByNumberApi, getOrdersApi, orderBurgerApi } from '@api';
+import {
+  getIngredientsApi,
+  getOrderByNumberApi,
+  getOrdersApi,
+  orderBurgerApi
+} from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TIngredient, TOrder } from '@utils-types';
 
@@ -55,8 +60,28 @@ export const fetchOrders = createAsyncThunk('order/fetchOrder', async () => {
   const response = await getOrdersApi();
   return response;
 });
-export const createOrder = createAsyncThunk(
-  'order/createOrder',
-  orderBurgerApi
+// export const createOrder = createAsyncThunk(
+//   'order/createOrder',
+//   orderBurgerApi,
+
+// );
+export const createOrder = createAsyncThunk<
+  {
+    order: TOrder;
+    name: string;
+  },
+  string[]
+>('orders/create', async (data, { rejectWithValue }) => {
+  const response = await orderBurgerApi(data);
+
+  if (!response?.success) {
+    return rejectWithValue(response);
+  }
+
+  return { order: response.order, name: response.name };
+});
+
+export const getOrderByNumber = createAsyncThunk(
+  'order/getOrderByNumber',
+  getOrderByNumberApi
 );
-export const getOrderByNumber= createAsyncThunk("order/getOrderByNumber",getOrderByNumberApi)

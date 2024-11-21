@@ -39,12 +39,14 @@ export const burgerConstructorSlice = createSlice({
       const tmp = state.ingredients[prevIndex];
       state.ingredients[prevIndex] = state.ingredients[index];
       state.ingredients[index] = tmp;
-    }
+    },
+    clearIngredients: () => initialState
   }
 });
 export const {
   addIngredient,
   deleteIngredient,
   moveUpIngredient,
-  moveDownIngredient
+  moveDownIngredient,
+  clearIngredients
 } = burgerConstructorSlice.actions;

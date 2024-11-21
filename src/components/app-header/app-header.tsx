@@ -4,7 +4,7 @@ import { useAppSelector } from '@services/store';
 import { useAuth } from '@hooks/useAuth';
 
 export const AppHeader: FC = () => {
-  const  {user}=useAuth();
-  const userName=user?.name
+  const { user } = useAuth();
+  const userName = user?.name;
   return <AppHeaderUI userName={userName} />;
 };

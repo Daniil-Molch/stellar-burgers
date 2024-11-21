@@ -15,7 +15,9 @@ export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
       dispatch(moveUpIngredient(index));
     };
 
-    const handleMoveDown = () => {dispatch(moveDownIngredient(index));};
+    const handleMoveDown = () => {
+      dispatch(moveDownIngredient(index));
+    };
 
     const handleClose = () => {
       dispatch(deleteIngredient(ingredient._id));
