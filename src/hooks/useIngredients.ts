@@ -7,7 +7,7 @@ export const useIngredients = () => {
   const ingredients = useAppSelector((s) => s.burger.ingridients);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    if (status == 'idle') {
+    if (status === 'idle') {
       dispatch(fetchIngridients());
     }
   }, [status]);
