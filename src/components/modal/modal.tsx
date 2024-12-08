@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import { TModalProps } from './type';
 import { ModalUI } from '@ui';
+import { useNavigate } from 'react-router-dom';
 
 const modalRoot = document.getElementById('modals');
 
@@ -25,3 +26,14 @@ export const Modal: FC<TModalProps> = memo(({ title, onClose, children }) => {
     modalRoot as HTMLDivElement
   );
 });
+
+export const NavigationModal: FC<TModalProps> = memo(
+  ({ title, onClose, children }) => {
+    const navigate = useNavigate();
+    function onDismiss() {
+      onClose && onClose();
+      navigate(-1);
+    }
+    return <Modal title={title} children={children} onClose={onDismiss} />;
+  }
+);
