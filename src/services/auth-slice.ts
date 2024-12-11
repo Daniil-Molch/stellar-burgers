@@ -90,6 +90,9 @@ export const registerUser = createAsyncThunk(
 );
 export const checkAuth = createAsyncThunk('auth/checkAuth', getUserApi);
 export const loginUser = createAsyncThunk('auth/loginUser', loginUserApi);
-export const logOutUser = createAsyncThunk('auth/logout', logoutApi);
+export const logOutUser = createAsyncThunk('auth/logout', () => {
+  debugger
+  return logoutApi();
+});
 export const updateUser = createAsyncThunk('auth/update', updateUserApi);
 export const resetPassword = createAsyncThunk('auth/reset', resetPasswordApi);
