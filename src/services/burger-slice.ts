@@ -37,6 +37,9 @@ export const burgerSlice = createSlice({
     builder.addCase(fetchIngridients.pending, (state) => {
       state.ingredientsStatus = 'pending';
     });
+    builder.addCase(fetchIngridients.rejected,(state)=>{
+      state.ingredientsStatus="failed";
+    })
     builder.addCase(fetchOrders.fulfilled, (state, action) => {
       state.ordersStatus = 'succeeded';
       state.orders = action.payload;

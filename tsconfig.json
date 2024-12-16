@@ -27,7 +27,7 @@
       "@services/*": ["src/services/*"],
       "@slices": ["src/services/slices"],
       "@selectors": ["src/services/selectors"],
-      "@hooks/*": ["src/hooks/*"],
+      "@hooks/*": ["src/hooks/*"]
     }
   },
   "include": ["src"]

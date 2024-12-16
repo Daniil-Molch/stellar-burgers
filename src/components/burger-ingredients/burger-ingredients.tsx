@@ -7,13 +7,13 @@ import { useAppDispatch, useAppSelector } from '@services/store';
 
 export const BurgerIngredients: FC = () => {
   const buns = useAppSelector((state) =>
-    state.burger.ingridients.filter((ingridient) => ingridient.type == 'bun')
+    state.burger.ingridients.filter((ingridient) => ingridient.type === 'bun')
   );
   const mains = useAppSelector((state) =>
-    state.burger.ingridients.filter((ingridient) => ingridient.type == 'main')
+    state.burger.ingridients.filter((ingridient) => ingridient.type === 'main')
   );
   const sauces = useAppSelector((state) =>
-    state.burger.ingridients.filter((ingridient) => ingridient.type == 'sauce')
+    state.burger.ingridients.filter((ingridient) => ingridient.type === 'sauce')
   );
 
   const [currentTab, setCurrentTab] = useState<TTabMode>('bun');
