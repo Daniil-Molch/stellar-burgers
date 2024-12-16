@@ -11,7 +11,6 @@ import {
 } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
-
 import { AppHeader, IngredientDetails, OrderInfo } from '@components';
 import {
   BrowserRouter,
@@ -19,11 +18,19 @@ import {
   Route,
   Router,
   Routes,
-  useLocation
+  useLocation,
+  useParams
 } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route';
 import { NavigationModal } from '../modal/modal';
-
+const OrdreModal = () => {
+  const { number } = useParams<{ number: string }>();
+  return (
+    <NavigationModal title={`#${number}`} onClose={() => {}}>
+      <OrderInfo />
+    </NavigationModal>
+  );
+};
 const App = () => {
   const location = useLocation();
   const backgroundLocation = location.state?.background;
@@ -72,9 +79,9 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          {/* <Route path={'/register'} Component={Register}></Route> */}
-          {/* <Route path={'/forgot-password'} Component={ForgotPassword}></Route> */}
-          {/* <Route path={'/reset-password'} Component={ResetPassword}></Route> */}
+                <Route path='/order/:number' element={<OrderInfo/>} />
+                <Route path="/feed/:number" element={<OrderInfo/>}/>
+                <Route path='/ingredients/:id' element={<IngredientDetails />} />
           <Route
             element={
               <ProtectedRoute>
@@ -90,27 +97,15 @@ const App = () => {
       </Routes>
       {backgroundLocation && (
         <Routes>
-          <Route
-            path='/profile/orders/:number'
-            element={
-              <NavigationModal title='Детали заказа' onClose={() => {}}>
-                <OrderInfo />
-              </NavigationModal>
-            }
-          />
-
+          <Route path='/profile/orders/:number' element={<OrdreModal></OrdreModal>} />
           <Route
             path={'/feed/:number'}
-            element={
-              <NavigationModal title='order info' onClose={() => {}}>
-                <OrderInfo />
-              </NavigationModal>
-            }
+            element={<OrdreModal></OrdreModal>}
           />
           <Route
             path={'/ingredients/:id'}
             element={
-              <NavigationModal title='IngredientDetails' onClose={() => {}}>
+              <NavigationModal title='Детали ингредиента' onClose={() => {}}>
                 <IngredientDetails />
               </NavigationModal>
             }

@@ -73,6 +73,48 @@ describe('тест асинхронных экшенов', () => {
     expect(ingredientsStatus).toEqual('pending');
     expect(ingridients.length).toEqual(0);
   });
+  test('fetchIngridientsRejected', async () => {
+    const mockData = {
+      success: false,
+      data: [
+        {
+          _id: '643d69a5c3f7b9001cfa093c',
+          name: 'Краторная булка N-200i',
+          type: 'bun',
+          proteins: 80,
+          fat: 24,
+          carbohydrates: 53,
+          calories: 420,
+          price: 1255,
+          image: 'https://code.s3.yandex.net/react/code/bun-02.png',
+          image_mobile:
+            'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
+          image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
+          __v: 0
+        }
+      ]
+    };
+    //@ts-expect-error
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        json: () => Promise.resolve(mockData),
+        ok: true
+      })
+    ) as jest.Mock;
+
+    // создаем стор в который будем класть данные, полученные в результате fetchTracks
+    const store = configureStore({
+      reducer: { [burgerSlice.name]: burgerSlice.reducer }
+    });
+
+    // ожидаем завершение выполнение асинхронного экшена
+    await store.dispatch(fetchIngridients());
+
+    const { ingridients, ingredientsStatus } = store.getState().burger;
+    // и сравниваем их с ожидаемым результатом
+    expect(ingredientsStatus).toEqual('failed');
+    expect(ingridients.length).toEqual(0);
+  });
   test('fetchOrdersFulfilled', async () => {
     const mockData = {
       success: true,

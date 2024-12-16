@@ -1,31 +1,19 @@
 import * as order from '../fixtures/newOrder.json';
-
+import * as mockBun from"../fixtures/mockDataBun.json";
 describe('E2E тест конструктора бургеров', () => {
   beforeEach(() => {});
-
+  const testUrl = 'http://localhost:4000';
+  const BURGER_API_URL="https://norma.nomoreparties.space/api";
   it('добавление булки', () => {
-    const mockBun = {
-      _id: 'test1',
-      name: 'test',
-      type: 'bun',
-      proteins: 80,
-      fat: 24,
-      carbohydrates: 53,
-      calories: 420,
-      price: 1255,
-      image: 'https://code.s3.yandex.net/react/code/bun-02.png',
-      image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
-      image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
-      __v: 0
-    };
-    cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', {
+    cy.intercept('GET', `${BURGER_API_URL}/ingredients`, {
       // fixture: 'ingredients.json'
       body: {
         success: true,
         data: [mockBun]
       }
     });
-    cy.visit('http://localhost:4000');
+    cy.visit(testUrl);
+    cy.get("[data-cy='constructor-element-top']").should('not.exist');
     cy.get(`[data-cy="burger-ingredient-${mockBun._id}"] button`).click();
     cy.get('[data-cy="constructor-element-top"]').should(
       'contain',
@@ -33,28 +21,15 @@ describe('E2E тест конструктора бургеров', () => {
     );
   });
   it('работа модального окна', () => {
-    const mockBun = {
-      _id: 'test1',
-      name: 'test',
-      type: 'bun',
-      proteins: 80,
-      fat: 24,
-      carbohydrates: 53,
-      calories: 420,
-      price: 1255,
-      image: 'https://code.s3.yandex.net/react/code/bun-02.png',
-      image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
-      image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
-      __v: 0
-    };
-    cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', {
+    cy.intercept('GET', `${BURGER_API_URL}/ingredients`, {
       // fixture: 'ingredients.json'
       body: {
         success: true,
         data: [mockBun]
       }
     });
-    cy.visit('http://localhost:4000');
+    cy.visit(testUrl);
+    cy.get("[data-cy='constructor-element-top']").should('not.exist');
     cy.get(`[data-cy="burger-ingredient-${mockBun._id}"]`).click();
     cy.get('[data-cy="modal"]').within(() => {
       cy.get('[data-cy="modal-title"]').should('contain', 'IngredientDetails');
@@ -64,20 +39,6 @@ describe('E2E тест конструктора бургеров', () => {
     cy.get('[data-cy="modal"]').should('not.exist');
   });
   it('создание заказа', () => {
-    const mockBun = {
-      _id: 'test1',
-      name: 'test',
-      type: 'bun',
-      proteins: 80,
-      fat: 24,
-      carbohydrates: 53,
-      calories: 420,
-      price: 1255,
-      image: 'https://code.s3.yandex.net/react/code/bun-02.png',
-      image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
-      image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
-      __v: 0
-    };
     const mockUserData = {
       success: true,
       user: {
@@ -90,15 +51,16 @@ describe('E2E тест конструктора бургеров', () => {
     cy.intercept('GET', 'api/auth/user', {
       body: mockUserData
     });
-    cy.intercept('POST', 'api/orders', { body:{...order} });
-    cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', {
+    cy.intercept('POST', 'api/orders', { body: { ...order } });
+    cy.intercept('GET', `${BURGER_API_URL}/ingredients`, {
       // fixture: 'ingredients.json'
       body: {
         success: true,
         data: [mockBun]
       }
     });
-    cy.visit('http://localhost:4000');
+    cy.visit(testUrl);
+    cy.get("[data-cy='constructor-element-top']").should('not.exist');
     cy.get(`[data-cy="burger-ingredient-${mockBun._id}"] button`).click();
     cy.get('[data-cy="constructor-element-top"]').should(
       'contain',
@@ -119,32 +81,3 @@ describe('E2E тест конструктора бургеров', () => {
     localStorage.removeItem('refreshToken');
   });
 });
-// #root > div > main > div > section.gWGQQO_DR2tGAz6JfTJw > div > ul:nth-child(2) > li:nth-child(2) > button
-
-// describe('Проверка работы модальных окон описаний ингредиентов', () => {
-//   describe('Проверка открытия модальных окон', () => {
-//     it('Базовое открытие по карточке ингредиента', () => {});
-
-//     it('Модальное окно с ингредиентом будет открыто после перезагрузки страницы', () => {});
-//   });
-
-//   describe('Проверка закрытия модальных окон', () => {
-//     it('Через нажатие на крестик', () => {});
-
-//     it('Через нажатие на оверлей', () => {});
-
-//     it('Через нажатие на Escape', () => {});
-//   });
-// });
-
-// describe('Процесс оформления заказа', () => {
-//   beforeEach(() => {});
-
-//   it('Базовая процедура оформления ПОСЛЕ авторизации', () => {});
-
-//   afterEach(() => {
-//     // Очистка фейковых токенов
-//     cy.clearCookie('accessToken');
-//     localStorage.removeItem('refreshToken');
-//   });
-// });

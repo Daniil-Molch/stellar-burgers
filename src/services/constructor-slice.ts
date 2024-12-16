@@ -1,7 +1,7 @@
 import { getIngredientsApi } from '@api';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TIngredient } from '@utils-types';
-
+import { v4 as uuid } from 'uuid';
 type ContructorState = {
   ingredients: TIngredient[];
   bun: TIngredient | null;
@@ -14,12 +14,17 @@ export const burgerConstructorSlice = createSlice({
   name: 'burgerConstructor',
   initialState,
   reducers: {
-    addIngredient: (state, action: PayloadAction<TIngredient>) => {
-      if (action.payload.type == 'bun') {
-        state.bun = action.payload;
-        return;
+    addIngredient: {
+      prepare: (payload: TIngredient) => ({
+        payload: { ...payload, id: uuid() }
+      }),
+      reducer: (state, action: PayloadAction<TIngredient>) => {
+        if (action.payload.type == 'bun') {
+          state.bun = action.payload;
+          return;
+        }
+        state.ingredients.push(action.payload);
       }
-      state.ingredients.push(action.payload);
     },
     deleteIngredient: (state, action: PayloadAction<string>) => {
       state.ingredients = state.ingredients.filter(

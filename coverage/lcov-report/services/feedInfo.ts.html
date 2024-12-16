@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for services/constructor-slice.ts</title>
+    <title>Code coverage report for services/feedInfo.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">services</a> constructor-slice.ts</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">services</a> feedInfo.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">84.44% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>52/52</span>
+                <span class='fraction'>38/45</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">84.44% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>52/52</span>
+                <span class='fraction'>38/45</span>
             </div>
         
             
@@ -108,35 +108,7 @@
 <a name='L43'></a><a href='#L43'>43</a>
 <a name='L44'></a><a href='#L44'>44</a>
 <a name='L45'></a><a href='#L45'>45</a>
-<a name='L46'></a><a href='#L46'>46</a>
-<a name='L47'></a><a href='#L47'>47</a>
-<a name='L48'></a><a href='#L48'>48</a>
-<a name='L49'></a><a href='#L49'>49</a>
-<a name='L50'></a><a href='#L50'>50</a>
-<a name='L51'></a><a href='#L51'>51</a>
-<a name='L52'></a><a href='#L52'>52</a>
-<a name='L53'></a><a href='#L53'>53</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">8x</span>
+<a name='L46'></a><a href='#L46'>46</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -167,58 +139,65 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { getIngredientsApi } from '@api';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TIngredient } from '@utils-types';
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { getFeedsApi } from '@api';
+import {
+  PayloadAction,
+  SerializedError,
+  createAsyncThunk,
+  createSlice
+} from '@reduxjs/toolkit';
+import { TOrder, TOrdersData } from '@utils-types';
+type TFeedsState = {
+  status: 'idle' | 'pending' | 'succeeded' | 'failed';
+  error: null | SerializedError;
+  data: TOrdersData;
+};
 &nbsp;
-type ContructorState = {
-  ingredients: TIngredient[];
-  bun: TIngredient | null;
+export const initialState: TFeedsState = {
+  status: 'idle',
+  error: null,
+  data: {
+    orders: [],
+    total: 0,
+    totalToday: 0
+  }
 };
-const initialState: ContructorState = {
-  bun: null,
-  ingredients: []
-};
-export const burgerConstructorSlice = createSlice({
-  name: 'burgerConstructor',
+&nbsp;
+export const feedInfo = createAsyncThunk('feeds/fetch', getFeedsApi);
+export const feedSlice = createSlice({
+  name: 'feeds',
   initialState,
-  reducers: {
-    addIngredient: (state, action: PayloadAction&lt;TIngredient&gt;) =&gt; {
-      if (action.payload.type == 'bun') {
-        state.bun = action.payload;
-        return;
-      }
-      state.ingredients.push(action.payload);
-    },
-    deleteIngredient: (state, action: PayloadAction&lt;string&gt;) =&gt; {
-      state.ingredients = state.ingredients.filter(
-        (ingredient) =&gt; ingredient._id !== action.payload
-      );
-    },
-    moveUpIngredient: (state, action: PayloadAction&lt;number&gt;) =&gt; {
-      const index = action.payload;
-      const prevIndex = index - 1;
-      const tmp = state.ingredients[prevIndex];
-      state.ingredients[prevIndex] = state.ingredients[index];
-      state.ingredients[index] = tmp;
-    },
-    moveDownIngredient: (state, action: PayloadAction&lt;number&gt;) =&gt; {
-      const index = action.payload;
-      const prevIndex = index + 1;
-      const tmp = state.ingredients[prevIndex];
-      state.ingredients[prevIndex] = state.ingredients[index];
-      state.ingredients[index] = tmp;
-    },
-    clearIngredients: () =&gt; initialState
+  reducers: {},
+  extraReducers: (builder) =&gt; {
+    builder.addCase(feedInfo.pending, (state) =&gt; {
+<span class="cstat-no" title="statement not covered" >      state.status = 'pending';</span>
+<span class="cstat-no" title="statement not covered" >      state.error = null;</span>
+    });
+    builder.addCase(feedInfo.fulfilled, (state, action) =&gt; {
+<span class="cstat-no" title="statement not covered" >      state.status = 'succeeded';</span>
+<span class="cstat-no" title="statement not covered" >      state.error = null;</span>
+<span class="cstat-no" title="statement not covered" >      state.data = action.payload;</span>
+    });
+    builder.addCase(feedInfo.rejected, (state, action) =&gt; {
+<span class="cstat-no" title="statement not covered" >      state.status = 'failed';</span>
+<span class="cstat-no" title="statement not covered" >      state.error = action.error;</span>
+    });
   }
 });
-export const {
-  addIngredient,
-  deleteIngredient,
-  moveUpIngredient,
-  moveDownIngredient,
-  clearIngredients
-} = burgerConstructorSlice.actions;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
